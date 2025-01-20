@@ -7,6 +7,24 @@
 
 package org.opengamestudio
 
+// Parse cfg file path
+//
+// Conditions:
+// 1. At app launch cfg file was specified with command line argument
+fun shouldParseCfgFilePath(c: Context): Context {
+    if (
+        c.recentField == "didLaunch" &&
+        cliInputFile(c.arguments).length > 0
+    ) {
+        c.cfgFile = cliInputFile(c.arguments)
+        c.recentField = "cfgFile"
+        return c
+    }
+
+    c.recentField = "none"
+    return c
+}
+
 // Print to console
 //
 // Conditions:
