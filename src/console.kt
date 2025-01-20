@@ -11,7 +11,7 @@ package org.opengamestudio
 fun consoleDebug(c: Context) {
     val key = c.recentField
     val value = "${c.fieldAny(c.recentField)}"//.take(30)
-    println("PSKOV-DBG key/value: '$key'/'$value'")
+    println("PSK-DBG k/v: '$key'/'$value'")
 }
 
 // Print to console
