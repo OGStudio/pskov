@@ -7,4 +7,4 @@
 
 package org.opengamestudio
 
-const val ARGUMENT_FILE = "--file"
+const val ARGUMENT_CFG = "--cfg"

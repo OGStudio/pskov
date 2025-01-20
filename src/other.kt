@@ -7,11 +7,11 @@
 
 package org.opengamestudio
 
-// Extract input file path from command line arguments
-fun cliInputFile(args: Array<String>): String {
+// Extract cfg file path from command line arguments
+fun cliCfgFile(args: Array<String>): String {
     for (arg in args) {
-        if (arg.startsWith(ARGUMENT_FILE)) {
-            val prefix = ARGUMENT_FILE + "="
+        if (arg.startsWith(ARGUMENT_CFG)) {
+            val prefix = ARGUMENT_CFG + "="
             val path = arg.substring(prefix.length)
             return path
         }

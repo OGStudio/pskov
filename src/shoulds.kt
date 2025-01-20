@@ -14,9 +14,9 @@ package org.opengamestudio
 fun shouldParseCfgFilePath(c: Context): Context {
     if (
         c.recentField == "didLaunch" &&
-        cliInputFile(c.arguments).length > 0
+        cliCfgFile(c.arguments).length > 0
     ) {
-        c.cfgFile = cliInputFile(c.arguments)
+        c.cfgFile = cliCfgFile(c.arguments)
         c.recentField = "cfgFile"
         return c
     }
@@ -34,7 +34,7 @@ fun shouldPrintToConsole(c: Context): Context {
         c.recentField == "didLaunch" &&
         c.arguments.isEmpty()
     ) {
-        c.consoleOutput = "Usage: {bin} --file=/path/to/pskov.cfg"
+        c.consoleOutput = "Usage: {bin} --cfg=/path/to/pskov.cfg"
         c.recentField = "consoleOutput"
         return c
     }
