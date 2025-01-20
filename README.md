@@ -6,4 +6,4 @@ $ `./gradlew jar`
 
 ## Run
 
-`./run/run-java --file=/path/to/pskov.cfg`
+$ `./run/run-java --file=../site-opengamestudio/pskov.cfg`
