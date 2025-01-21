@@ -8,8 +8,8 @@ fun main(args: Array<String>) {
 
     // Register behaviour.
     arrayOf(
-        ::shouldParseCfgFilePath,
         ::shouldPrintToConsole,
+        ::shouldResetCfgPath,
     ).forEach { f ->
         ctrl.registerFunction { c -> f(c as Context) }
     }

@@ -11,10 +11,10 @@ package org.opengamestudio
 data class Context(
     // Command line arguments
     var arguments: Array<String> = arrayOf(),
-    // Path to config
-    var cfgFile: String = "",
     // Config file contents as lines
-    var cfgFileLines: Array<String> = arrayOf(),
+    var cfgLines: Array<String> = arrayOf(),
+    // Path to config
+    var cfgPath: String = "",
     // String to print to console
     var consoleOutput: String = "",
     // The application did finish launching
@@ -26,10 +26,10 @@ data class Context(
     override fun <T> field(name: String): T {
         if (name == "arguments") {
             return arguments as T
-        } else if (name == "cfgFile") {
-            return cfgFile as T
-        } else if (name == "cfgFileLines") {
-            return cfgFileLines as T
+        } else if (name == "cfgLines") {
+            return cfgLines as T
+        } else if (name == "cfgPath") {
+            return cfgPath as T
         } else if (name == "consoleOutput") {
             return consoleOutput as T
         } else if (name == "didLaunch") {
@@ -50,10 +50,10 @@ data class Context(
     ) {
         if (name == "arguments") {
             arguments = value as Array<String>
-        } else if (name == "cfgFile") {
-            cfgFile = value as String
-        } else if (name == "cfgFileLines") {
-            cfgFileLines = value as Array<String>
+        } else if (name == "cfgLines") {
+            cfgLines = value as Array<String>
+        } else if (name == "cfgPath") {
+            cfgPath = value as String
         } else if (name == "consoleOutput") {
             consoleOutput = value as String
         } else if (name == "didLaunch") {
