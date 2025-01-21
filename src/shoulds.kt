@@ -25,6 +25,21 @@ fun shouldPrintToConsole(c: Context): Context {
     return c
 }
 
+// Read cfg file
+//
+// Conditions:
+// 1. Cfg file path is now available
+fun shouldReadCfg(c: Context): Context {
+    if (c.recentField == "cfgPath") {
+        c.cfgLines = fsReadFile(c.cfgPath)
+        c.recentField = "cfgLines"
+        return c
+    }
+
+    c.recentField = "none"
+    return c
+}
+
 // Reset path to cfg file
 //
 // Conditions:
