@@ -11,6 +11,8 @@ package org.opengamestudio
 data class Context(
     // Command line arguments
     var arguments: Array<String> = arrayOf(),
+    // Config contents as key-value dictionary
+    var cfg: Map<String, String> = mapOf(),
     // Config file contents as lines
     var cfgLines: Array<String> = arrayOf(),
     // Path to config
@@ -26,6 +28,8 @@ data class Context(
     override fun <T> field(name: String): T {
         if (name == "arguments") {
             return arguments as T
+        } else if (name == "cfg") {
+            return cfg as T
         } else if (name == "cfgLines") {
             return cfgLines as T
         } else if (name == "cfgPath") {
@@ -50,6 +54,8 @@ data class Context(
     ) {
         if (name == "arguments") {
             arguments = value as Array<String>
+        } else if (name == "cfg") {
+            cfg = value as Map<String, String>
         } else if (name == "cfgLines") {
             cfgLines = value as Array<String>
         } else if (name == "cfgPath") {

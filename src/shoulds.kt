@@ -7,6 +7,21 @@
 
 package org.opengamestudio
 
+// Parse cfg
+//
+// Conditions:
+// 1. Cfg file contents are available
+fun shouldParseCfg(c: Context): Context {
+    if (c.recentField == "cfgLines") {
+        c.cfg = cfgParse(c.cfgLines)
+        c.recentField = "cfg"
+        return c
+    }
+
+    c.recentField = "none"
+    return c
+}
+
 // Print to console
 //
 // Conditions:
