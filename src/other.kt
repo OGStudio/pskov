@@ -12,7 +12,7 @@ package org.opengamestudio
 fun cfgDir(path: String): String {
     if (path.endsWith(CFG_FILE)) {
         val len = path.length - CFG_FILE.length
-        return path.substring(len)
+        return path.substring(0, len)
     }
 
     return ""
@@ -26,7 +26,8 @@ fun cfgInputDirs(
     val items = dic["input"]!!.split(";")
     var dirs = arrayOf<String>()
     for (item in items) {
-        dirs += "$prefix$FS_DELIMITER$item"
+        val dir = prefix + FS_DELIMITER + item
+        dirs += dir
     }
     return dirs
 }
