@@ -7,6 +7,30 @@
 
 package org.opengamestudio
 
+
+// Return cfg directory
+fun cfgDir(path: String): String {
+    if (path.endsWith(CFG_FILE)) {
+        val len = path.length - CFG_FILE.length
+        return path.substring(len)
+    }
+
+    return ""
+}
+
+// Return cfg[input] values prefixed by directory
+fun cfgInputDirs(
+    dic: Map<String, String>,
+    prefix: String
+): Array<String> {
+    val items = dic["input"]!!.split(";")
+    var dirs = arrayOf<String>()
+    for (item in items) {
+        dirs += "$prefix$FS_DELIMITER$item"
+    }
+    return dirs
+}
+
 // Parse cfg file contents
 fun cfgParse(lines: Array<String>): Map<String, String> {
     var dic = mutableMapOf<String, String>()

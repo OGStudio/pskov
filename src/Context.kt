@@ -23,6 +23,8 @@ data class Context(
     var didLaunch: Boolean = false,
     // Finished writing to output file
     var didWriteOutputFile: Boolean = false,
+    // List of directories from cfg's `input`
+    var inputDirs: Array<String> = arrayOf(),
     override var recentField: String = "",
 ): CLDContext {
     override fun <T> field(name: String): T {
@@ -40,6 +42,8 @@ data class Context(
             return didLaunch as T
         } else if (name == "didWriteOutputFile") {
             return didWriteOutputFile as T
+        } else if (name == "inputDirs") {
+            return inputDirs as T
         }
         return "unknown-field-name" as T
     }
@@ -66,6 +70,8 @@ data class Context(
             didLaunch = value as Boolean
         } else if (name == "didWriteOutputFile") {
             didWriteOutputFile = value as Boolean
+        } else if (name == "inputDirs") {
+            inputDirs = value as Array<String>
         }
     }
 }

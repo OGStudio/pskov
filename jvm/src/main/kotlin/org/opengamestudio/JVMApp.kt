@@ -12,6 +12,7 @@ fun main(args: Array<String>) {
         ::shouldPrintToConsole,
         ::shouldReadCfg,
         ::shouldResetCfgPath,
+        ::shouldResetInputDirs,
     ).forEach { f ->
         ctrl.registerFunction { c -> f(c as Context) }
     }

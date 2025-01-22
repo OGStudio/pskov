@@ -72,3 +72,22 @@ fun shouldResetCfgPath(c: Context): Context {
     c.recentField = "none"
     return c
 }
+
+// Reset input dirs from cfg's `input`
+//
+// Conditions:
+// 1. Cfg has been parsed
+fun shouldResetInputDirs(c: Context): Context {
+    if (
+        c.recentField == "cfg" &&
+        c.cfg.containsKey("input")
+    ) {
+        val dir = cfgDir(c.cfgPath)
+        c.inputDirs = cfgInputDirs(c.cfg, dir)
+        c.recentField = "inputDirs"
+        return c
+    }
+
+    c.recentField = "none"
+    return c
+}
