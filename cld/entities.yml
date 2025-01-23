@@ -1,0 +1,11 @@
+version: 1
+
+kotlin: package org.opengamestudio
+
+# File system item representation
+FSFile:
+    type: struct
+    fields:
+        isDirectory: Bool
+        isFile: Bool
+        name: String

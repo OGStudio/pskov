@@ -1,0 +1,4 @@
+#!/bin/bash -e
+SCRIPT_DIR=$(cd "$(dirname "$0")" ; pwd -P)
+TRANSLATOR=/Volumes/MOE/p/cross-language-dialect/translator
+$TRANSLATOR/run/run-java --file=$SCRIPT_DIR/entities.yml --out=$SCRIPT_DIR/../src/entities.kt
