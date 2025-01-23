@@ -88,3 +88,27 @@ fun dbgStringArray(items: Array<String>): String {
     output += "]"
     return output
 }
+
+// Search in each of the provided directory for Markdown files
+fun listInputFiles(dirs: Array<String>): Array<String> {
+    var files = arrayOf<String>()
+    for (dir in dirs) {
+        files += listMarkdownFiles(dir)
+    }
+    return files
+}
+
+// Search for `*.md` files in the directory and prepend dir
+fun listMarkdownFiles(dir: String): Array<String> {
+    var fileNames = arrayOf<String>()
+    val files = fsListFiles(dir)
+    for (file in files) {
+        if (
+            file.isFile &&
+            file.name.endsWith(".md")
+        ) {
+            fileNames += dir + FS_DELIMITER + file.name
+        }
+    }
+    return fileNames
+}

@@ -7,6 +7,20 @@
 
 package org.opengamestudio
 
+// List files to process
+//
+// Conditions:
+// 1. Input dirs are available
+fun shouldListInputFiles(c: Context): Context {
+    if (c.recentField == "inputDirs") {
+        c.inputFiles = listInputFiles(c.inputDirs)
+        c.recentField = "inputFiles"
+        return c
+    }
+
+    c.recentField = "none"
+    return c
+}
 // Parse cfg
 //
 // Conditions:
