@@ -70,3 +70,21 @@ fun cliCfg(args: Array<String>): String {
     }
     return ""
 }
+
+// Convert string array to debug string
+fun dbgStringArray(items: Array<String>): String {
+    var output = "(${items.size})["
+    var i = 0
+    // Construct the preview.
+    for (str in items) {
+        output += str + ","
+        i += 1
+        // Interrupt the preview.
+        if (i > 2) {
+            output += "..."
+            break
+        }
+    }
+    output += "]"
+    return output
+}
