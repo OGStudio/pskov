@@ -24,4 +24,8 @@ fun main(args: Array<String>) {
     ctrl.set("arguments", args)
     // Launch.
     ctrl.set("didLaunch", true)
+
+
+    // TODO: REMOVE
+    println("ИГР: ${markdownToHTML("Sample **text**")}")
 }
