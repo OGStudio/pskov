@@ -7,7 +7,6 @@
 
 package org.opengamestudio
 
-
 // Return directory where config is located
 fun cfgDir(path: String): String {
     if (path.endsWith(CFG_FILE)) {

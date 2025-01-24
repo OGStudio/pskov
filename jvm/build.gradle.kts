@@ -34,4 +34,5 @@ tasks.jar {
 }
 
 dependencies {
+    implementation("org.jetbrains:markdown:0.7.3")
 }

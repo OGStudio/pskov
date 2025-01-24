@@ -29,6 +29,8 @@ data class Context(
     var inputDirs: Array<String> = arrayOf(),
     // List of files to process
     var inputFiles: Array<String> = arrayOf(),
+    // Currently converted Markdown file contents as lines
+    var markdownLines: Array<String> = arrayOf(),
     // Start conversion of the input file specified by id
     var startConversion: Int = 0,
     override var recentField: String = "",
@@ -54,6 +56,8 @@ data class Context(
             return inputDirs as T
         } else if (name == "inputFiles") {
             return inputFiles as T
+        } else if (name == "markdownLines") {
+            return markdownLines as T
         } else if (name == "startConversion") {
             return startConversion as T
         }
@@ -88,6 +92,8 @@ data class Context(
             inputDirs = value as Array<String>
         } else if (name == "inputFiles") {
             inputFiles = value as Array<String>
+        } else if (name == "markdownLines") {
+            markdownLines = value as Array<String>
         } else if (name == "startConversion") {
             startConversion = value as Int
         }

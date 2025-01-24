@@ -69,6 +69,22 @@ fun shouldReadCfg(c: Context): Context {
     return c
 }
 
+// Read markdown file
+//
+// Conditions:
+// 1. Started conversion of markdown file
+fun shouldReadMarkdown(c: Context): Context {
+    if (c.recentField == "startConversion") {
+        val path = c.inputFiles[c.startConversion]
+        c.markdownLines = fsReadFile(path)
+        c.recentField = "markdownLines"
+        return c
+    }
+
+    c.recentField = "none"
+    return c
+}
+
 // Reset path to cfg file
 //
 // Conditions:
@@ -99,6 +115,21 @@ fun shouldResetInputDirs(c: Context): Context {
         val dir = cfgDir(c.cfgPath)
         c.inputDirs = cfgInputDirs(c.cfg, dir)
         c.recentField = "inputDirs"
+        return c
+    }
+
+    c.recentField = "none"
+    return c
+}
+
+// Start conversion of the file specified by id
+//
+// Conditions:
+// 1. Input files are available
+fun shouldStartConversion(c: Context): Context {
+    if (c.recentField == "inputFiles") {
+        c.startConversion = 0
+        c.recentField = "startConversion"
         return c
     }
 
