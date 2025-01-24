@@ -23,10 +23,14 @@ data class Context(
     var didLaunch: Boolean = false,
     // Finished writing to output file
     var didWriteOutputFile: Boolean = false,
+    // Finish conversion of current input file
+    var finishConversion: Boolean = false,
     // List of directories from cfg's `input`
     var inputDirs: Array<String> = arrayOf(),
     // List of files to process
     var inputFiles: Array<String> = arrayOf(),
+    // Start conversion of the input file specified by id
+    var startConversion: Int = 0,
     override var recentField: String = "",
 ): CLDContext {
     override fun <T> field(name: String): T {
@@ -44,10 +48,14 @@ data class Context(
             return didLaunch as T
         } else if (name == "didWriteOutputFile") {
             return didWriteOutputFile as T
+        } else if (name == "finishConversion") {
+            return finishConversion as T
         } else if (name == "inputDirs") {
             return inputDirs as T
         } else if (name == "inputFiles") {
             return inputFiles as T
+        } else if (name == "startConversion") {
+            return startConversion as T
         }
         return "unknown-field-name" as T
     }
@@ -74,10 +82,14 @@ data class Context(
             didLaunch = value as Boolean
         } else if (name == "didWriteOutputFile") {
             didWriteOutputFile = value as Boolean
+        } else if (name == "finishConversion") {
+            finishConversion = value as Boolean
         } else if (name == "inputDirs") {
             inputDirs = value as Array<String>
         } else if (name == "inputFiles") {
             inputFiles = value as Array<String>
+        } else if (name == "startConversion") {
+            startConversion = value as Int
         }
     }
 }
