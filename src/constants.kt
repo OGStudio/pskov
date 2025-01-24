@@ -7,4 +7,6 @@
 
 package org.opengamestudio
 
-const val ARGUMENT_FILE = "--file"
+const val ARGUMENT_CFG = "--cfg"
+const val CFG_FILE = "pskov.cfg"
+const val FS_DELIMITER = "/"

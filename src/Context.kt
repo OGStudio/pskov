@@ -11,39 +11,43 @@ package org.opengamestudio
 data class Context(
     // Command line arguments
     var arguments: Array<String> = arrayOf(),
+    // Config contents as key-value dictionary
+    var cfg: Map<String, String> = mapOf(),
+    // Config file contents as lines
+    var cfgLines: Array<String> = arrayOf(),
+    // Path to config
+    var cfgPath: String = "",
     // String to print to console
     var consoleOutput: String = "",
     // The application did finish launching
     var didLaunch: Boolean = false,
     // Finished writing to output file
     var didWriteOutputFile: Boolean = false,
-    // Path to input file
-    var inputFile: String = "",
-    // Input file contents as lines
-    var inputFileLines: Array<String> = arrayOf(),
-    // Path to output file
-    var outputFile: String = "",
-    // Contents to write to output file
-    var outputFileContents: String = "",
+    // List of directories from cfg's `input`
+    var inputDirs: Array<String> = arrayOf(),
+    // List of files to process
+    var inputFiles: Array<String> = arrayOf(),
     override var recentField: String = "",
 ): CLDContext {
     override fun <T> field(name: String): T {
         if (name == "arguments") {
             return arguments as T
+        } else if (name == "cfg") {
+            return cfg as T
+        } else if (name == "cfgLines") {
+            return cfgLines as T
+        } else if (name == "cfgPath") {
+            return cfgPath as T
         } else if (name == "consoleOutput") {
             return consoleOutput as T
         } else if (name == "didLaunch") {
             return didLaunch as T
         } else if (name == "didWriteOutputFile") {
             return didWriteOutputFile as T
-        } else if (name == "inputFile") {
-            return inputFile as T
-        } else if (name == "inputFileLines") {
-            return inputFileLines as T
-        } else if (name == "outputFile") {
-            return outputFile as T
-        } else if (name == "outputFileContents") {
-            return outputFileContents as T
+        } else if (name == "inputDirs") {
+            return inputDirs as T
+        } else if (name == "inputFiles") {
+            return inputFiles as T
         }
         return "unknown-field-name" as T
     }
@@ -58,20 +62,22 @@ data class Context(
     ) {
         if (name == "arguments") {
             arguments = value as Array<String>
+        } else if (name == "cfg") {
+            cfg = value as Map<String, String>
+        } else if (name == "cfgLines") {
+            cfgLines = value as Array<String>
+        } else if (name == "cfgPath") {
+            cfgPath = value as String
         } else if (name == "consoleOutput") {
             consoleOutput = value as String
         } else if (name == "didLaunch") {
             didLaunch = value as Boolean
         } else if (name == "didWriteOutputFile") {
             didWriteOutputFile = value as Boolean
-        } else if (name == "inputFile") {
-            inputFile = value as String
-        } else if (name == "inputFileLines") {
-            inputFileLines = value as Array<String>
-        } else if (name == "outputFile") {
-            outputFile = value as String
-        } else if (name == "outputFileContents") {
-            outputFileContents = value as String
+        } else if (name == "inputDirs") {
+            inputDirs = value as Array<String>
+        } else if (name == "inputFiles") {
+            inputFiles = value as Array<String>
         }
     }
 }

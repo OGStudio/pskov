@@ -10,8 +10,14 @@ package org.opengamestudio
 // Debug controller/context changes to console
 fun consoleDebug(c: Context) {
     val key = c.recentField
-    val value = "${c.fieldAny(c.recentField)}"//.take(30)
-    println("PSK-DBG '$key': '$value'")
+    val value = c.fieldAny(c.recentField)
+    var strval = "${value}"//.take(30)
+    // Preview array of strings
+    (value as? Array<String>)?.also { items ->
+        strval = dbgStringArray(items)
+    }
+
+    println("PSK-DBG '$key': '$strval'")
 }
 
 // Print to console
