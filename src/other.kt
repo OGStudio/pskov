@@ -8,7 +8,7 @@
 package org.opengamestudio
 
 
-// Return cfg directory
+// Return directory where config is located
 fun cfgDir(path: String): String {
     if (path.endsWith(CFG_FILE)) {
         val len = path.length - CFG_FILE.length
@@ -110,5 +110,6 @@ fun listMarkdownFiles(dir: String): Array<String> {
             fileNames += dir + FS_DELIMITER + file.name
         }
     }
+    fileNames.sort()
     return fileNames
 }
