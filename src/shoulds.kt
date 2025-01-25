@@ -155,6 +155,25 @@ fun shouldResetInputDirs(c: Context): Context {
     return c
 }
 
+// Save generated HTML to disk
+//
+// Conditions:
+// 1. Generated HTML is available
+fun shouldSaveHTML(c: Context): Context {
+    if (c.recentField == "html") {
+        val inputFile = c.inputFiles[c.startConversion]
+        val path = outputFile(inputFile)
+        fsWriteFile(path, c.html)
+        c.didSaveHTML = true
+        c.recentField = "didSaveHTML"
+        return c
+    }
+
+    c.recentField = "none"
+    return c
+}
+
+
 // Start conversion of the file specified by id
 //
 // Conditions:

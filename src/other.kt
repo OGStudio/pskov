@@ -122,3 +122,8 @@ fun listMarkdownFiles(dir: String): Array<String> {
     fileNames.sort()
     return fileNames
 }
+
+// Convert input Markdown filename to output HTML filename
+fun outputFile(inputFile: String): String {
+    return inputFile.replace(".md", ".psk2.html")
+}

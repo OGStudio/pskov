@@ -21,8 +21,8 @@ data class Context(
     var consoleOutput: String = "",
     // The application did finish launching
     var didLaunch: Boolean = false,
-    // Finished writing to output file
-    var didWriteOutputFile: Boolean = false,
+    // Finished writing generated HTML to disk
+    var didSaveHTML: Boolean = false,
     // Finish conversion of current input file
     var finishConversion: Boolean = false,
     // HTML generated out of Makdown for currently processed file
@@ -52,8 +52,8 @@ data class Context(
             return consoleOutput as T
         } else if (name == "didLaunch") {
             return didLaunch as T
-        } else if (name == "didWriteOutputFile") {
-            return didWriteOutputFile as T
+        } else if (name == "didSaveHTML") {
+            return didSaveHTML as T
         } else if (name == "finishConversion") {
             return finishConversion as T
         } else if (name == "html") {
@@ -92,8 +92,8 @@ data class Context(
             consoleOutput = value as String
         } else if (name == "didLaunch") {
             didLaunch = value as Boolean
-        } else if (name == "didWriteOutputFile") {
-            didWriteOutputFile = value as Boolean
+        } else if (name == "didSaveHTML") {
+            didSaveHTML = value as Boolean
         } else if (name == "finishConversion") {
             finishConversion = value as Boolean
         } else if (name == "html") {
