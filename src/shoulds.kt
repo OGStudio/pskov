@@ -7,6 +7,21 @@
 
 package org.opengamestudio
 
+// Convert Markdown to HTML
+//
+// Conditions:
+// 1. Markdown is available
+fun shouldConvert(c: Context): Context {
+    if (c.recentField == "markdownLines") {
+        c.html = markdownToHTML(c.markdownLines)
+        c.recentField = "html"
+        return c
+    }
+
+    c.recentField = "none"
+    return c
+}
+
 // List files to process
 //
 // Conditions:
