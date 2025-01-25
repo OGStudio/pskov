@@ -17,7 +17,9 @@ fun consoleDebug(c: Context) {
         strval = dbgStringArray(items)
     }
 
-    println("PSK-DBG '$key': '$strval'")
+    if (c.isDbg) {
+        println("PSK-DBG '$key': '$strval'")
+    }
 }
 
 // Print to console

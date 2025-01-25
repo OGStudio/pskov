@@ -14,6 +14,7 @@ fun main(args: Array<String>) {
         ::shouldReadCfg,
         ::shouldReadMarkdown,
         ::shouldResetCfgPath,
+        ::shouldResetDbg,
         ::shouldResetInputDirs,
         ::shouldStartConversion,
     ).forEach { f ->

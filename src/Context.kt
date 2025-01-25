@@ -29,6 +29,8 @@ data class Context(
     var inputDirs: Array<String> = arrayOf(),
     // List of files to process
     var inputFiles: Array<String> = arrayOf(),
+    // Debug output state
+    var isDbg: Boolean = false,
     // Currently converted Markdown file contents as lines
     var markdownLines: Array<String> = arrayOf(),
     // Start conversion of the input file specified by id
@@ -56,6 +58,8 @@ data class Context(
             return inputDirs as T
         } else if (name == "inputFiles") {
             return inputFiles as T
+        } else if (name == "isDbg") {
+            return isDbg as T
         } else if (name == "markdownLines") {
             return markdownLines as T
         } else if (name == "startConversion") {
@@ -92,6 +96,8 @@ data class Context(
             inputDirs = value as Array<String>
         } else if (name == "inputFiles") {
             inputFiles = value as Array<String>
+        } else if (name == "isDbg") {
+            isDbg = value as Boolean
         } else if (name == "markdownLines") {
             markdownLines = value as Array<String>
         } else if (name == "startConversion") {

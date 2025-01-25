@@ -70,6 +70,16 @@ fun cliCfg(args: Array<String>): String {
     return ""
 }
 
+// Detect the presence of debug command line argument
+fun cliDbg(args: Array<String>): Boolean {
+    for (arg in args) {
+        if (arg == ARGUMENT_DBG) {
+            return true
+        }
+    }
+    return false
+}
+
 // Convert string array to debug string
 fun dbgStringArray(items: Array<String>): String {
     var output = "(${items.size})["
