@@ -25,6 +25,8 @@ data class Context(
     var didWriteOutputFile: Boolean = false,
     // Finish conversion of current input file
     var finishConversion: Boolean = false,
+    // HTML generated out of Makdown for currently processed file
+    var htmlLines: Array<String> = arrayOf(),
     // List of directories from cfg's `input`
     var inputDirs: Array<String> = arrayOf(),
     // List of files to process
@@ -54,6 +56,8 @@ data class Context(
             return didWriteOutputFile as T
         } else if (name == "finishConversion") {
             return finishConversion as T
+        } else if (name == "htmlLines") {
+            return htmlLines as T
         } else if (name == "inputDirs") {
             return inputDirs as T
         } else if (name == "inputFiles") {
@@ -92,6 +96,8 @@ data class Context(
             didWriteOutputFile = value as Boolean
         } else if (name == "finishConversion") {
             finishConversion = value as Boolean
+        } else if (name == "htmlLines") {
+            htmlLines = value as Array<String>
         } else if (name == "inputDirs") {
             inputDirs = value as Array<String>
         } else if (name == "inputFiles") {
