@@ -87,7 +87,7 @@ fun shouldReadCfg(c: Context): Context {
 // Read markdown file
 //
 // Conditions:
-// 1. Started conversion of markdown file
+// 1. Time to conversion another Markdown file
 fun shouldReadMarkdown(c: Context): Context {
     if (c.recentField == "convertFileId") {
         val path = c.inputFiles[c.convertFileId]
