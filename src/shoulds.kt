@@ -104,9 +104,19 @@ fun shouldReadMarkdown(c: Context): Context {
 //
 // Conditions:
 // 1. Input files are available
+// 2. HTML file was saved
 fun shouldRepeatConversion(c: Context): Context {
     if (c.recentField == "inputFiles") {
         c.convertFileId = 0
+        c.recentField = "convertFileId"
+        return c
+    }
+
+    if (
+        c.recentField == "didSaveHTML" &&
+        c.convertFileId + 1 < c.inputFiles.size
+    ) {
+        c.convertFileId += 1
         c.recentField = "convertFileId"
         return c
     }
