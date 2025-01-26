@@ -19,12 +19,12 @@ data class Context(
     var cfgPath: String = "",
     // String to print to console
     var consoleOutput: String = "",
+    // Conversion iterator
+    var convertFileId: Int = 0,
     // The application did finish launching
     var didLaunch: Boolean = false,
     // Finished writing generated HTML to disk
     var didSaveHTML: Boolean = false,
-    // Finish conversion of current input file
-    var finishConversion: Boolean = false,
     // HTML generated out of Makdown for currently processed file
     var html: String = "",
     // List of directories from cfg's `input`
@@ -35,8 +35,6 @@ data class Context(
     var isDbg: Boolean = false,
     // Currently converted Markdown file contents as lines
     var markdownLines: Array<String> = arrayOf(),
-    // Start conversion of the input file specified by id
-    var startConversion: Int = 0,
     override var recentField: String = "",
 ): CLDContext {
     override fun <T> field(name: String): T {
@@ -50,12 +48,12 @@ data class Context(
             return cfgPath as T
         } else if (name == "consoleOutput") {
             return consoleOutput as T
+        } else if (name == "convertFileId") {
+            return convertFileId as T
         } else if (name == "didLaunch") {
             return didLaunch as T
         } else if (name == "didSaveHTML") {
             return didSaveHTML as T
-        } else if (name == "finishConversion") {
-            return finishConversion as T
         } else if (name == "html") {
             return html as T
         } else if (name == "inputDirs") {
@@ -66,8 +64,6 @@ data class Context(
             return isDbg as T
         } else if (name == "markdownLines") {
             return markdownLines as T
-        } else if (name == "startConversion") {
-            return startConversion as T
         }
         return "unknown-field-name" as T
     }
@@ -90,12 +86,12 @@ data class Context(
             cfgPath = value as String
         } else if (name == "consoleOutput") {
             consoleOutput = value as String
+        } else if (name == "convertFileId") {
+            convertFileId = value as Int
         } else if (name == "didLaunch") {
             didLaunch = value as Boolean
         } else if (name == "didSaveHTML") {
             didSaveHTML = value as Boolean
-        } else if (name == "finishConversion") {
-            finishConversion = value as Boolean
         } else if (name == "html") {
             html = value as String
         } else if (name == "inputDirs") {
@@ -106,8 +102,6 @@ data class Context(
             isDbg = value as Boolean
         } else if (name == "markdownLines") {
             markdownLines = value as Array<String>
-        } else if (name == "startConversion") {
-            startConversion = value as Int
         }
     }
 }

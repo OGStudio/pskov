@@ -14,11 +14,11 @@ fun main(args: Array<String>) {
         ::shouldPrintToConsole,
         ::shouldReadCfg,
         ::shouldReadMarkdown,
+        ::shouldRepeatConversion,
         ::shouldResetCfgPath,
         ::shouldResetDbg,
         ::shouldResetInputDirs,
         ::shouldSaveHTML,
-        ::shouldStartConversion,
     ).forEach { f ->
         ctrl.registerFunction { c -> f(c as Context) }
     }

@@ -89,10 +89,25 @@ fun shouldReadCfg(c: Context): Context {
 // Conditions:
 // 1. Started conversion of markdown file
 fun shouldReadMarkdown(c: Context): Context {
-    if (c.recentField == "startConversion") {
-        val path = c.inputFiles[c.startConversion]
+    if (c.recentField == "convertFileId") {
+        val path = c.inputFiles[c.convertFileId]
         c.markdownLines = fsReadFile(path)
         c.recentField = "markdownLines"
+        return c
+    }
+
+    c.recentField = "none"
+    return c
+}
+
+// Iterate over input files to convert them
+//
+// Conditions:
+// 1. Input files are available
+fun shouldRepeatConversion(c: Context): Context {
+    if (c.recentField == "inputFiles") {
+        c.convertFileId = 0
+        c.recentField = "convertFileId"
         return c
     }
 
@@ -161,27 +176,11 @@ fun shouldResetInputDirs(c: Context): Context {
 // 1. Generated HTML is available
 fun shouldSaveHTML(c: Context): Context {
     if (c.recentField == "html") {
-        val inputFile = c.inputFiles[c.startConversion]
+        val inputFile = c.inputFiles[c.convertFileId]
         val path = outputFile(inputFile)
         fsWriteFile(path, c.html)
         c.didSaveHTML = true
         c.recentField = "didSaveHTML"
-        return c
-    }
-
-    c.recentField = "none"
-    return c
-}
-
-
-// Start conversion of the file specified by id
-//
-// Conditions:
-// 1. Input files are available
-fun shouldStartConversion(c: Context): Context {
-    if (c.recentField == "inputFiles") {
-        c.startConversion = 0
-        c.recentField = "startConversion"
         return c
     }
 
