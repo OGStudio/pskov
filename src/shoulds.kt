@@ -7,6 +7,21 @@
 
 package org.opengamestudio
 
+// Convert Markdown to HTML
+//
+// Conditions:
+// 1. Markdown is available
+fun shouldConvert(c: Context): Context {
+    if (c.recentField == "markdownLines") {
+        c.html = markdownToHTML(c.markdownLines)
+        c.recentField = "html"
+        return c
+    }
+
+    c.recentField = "none"
+    return c
+}
+
 // List files to process
 //
 // Conditions:
@@ -69,6 +84,47 @@ fun shouldReadCfg(c: Context): Context {
     return c
 }
 
+// Read markdown file
+//
+// Conditions:
+// 1. Time to convert another Markdown file
+fun shouldReadMarkdown(c: Context): Context {
+    if (c.recentField == "convertFileId") {
+        val path = c.inputFiles[c.convertFileId]
+        c.markdownLines = fsReadFile(path)
+        c.recentField = "markdownLines"
+        return c
+    }
+
+    c.recentField = "none"
+    return c
+}
+
+// Iterate over input files to convert them
+//
+// Conditions:
+// 1. Input files are available
+// 2. HTML file was saved
+fun shouldRepeatConversion(c: Context): Context {
+    if (c.recentField == "inputFiles") {
+        c.convertFileId = 0
+        c.recentField = "convertFileId"
+        return c
+    }
+
+    if (
+        c.recentField == "didSaveHTML" &&
+        c.convertFileId + 1 < c.inputFiles.size
+    ) {
+        c.convertFileId += 1
+        c.recentField = "convertFileId"
+        return c
+    }
+
+    c.recentField = "none"
+    return c
+}
+
 // Reset path to cfg file
 //
 // Conditions:
@@ -80,6 +136,24 @@ fun shouldResetCfgPath(c: Context): Context {
     ) {
         c.cfgPath = cliCfg(c.arguments)
         c.recentField = "cfgPath"
+        return c
+    }
+
+    c.recentField = "none"
+    return c
+}
+
+// Reset debug output state
+//
+// Conditions:
+// 1. Arguments are available
+fun shouldResetDbg(c: Context): Context {
+    if (
+        c.recentField == "arguments" &&
+        cliDbg(c.arguments)
+    ) {
+        c.isDbg = cliDbg(c.arguments)
+        c.recentField = "isDbg"
         return c
     }
 
@@ -99,6 +173,24 @@ fun shouldResetInputDirs(c: Context): Context {
         val dir = cfgDir(c.cfgPath)
         c.inputDirs = cfgInputDirs(c.cfg, dir)
         c.recentField = "inputDirs"
+        return c
+    }
+
+    c.recentField = "none"
+    return c
+}
+
+// Save generated HTML to disk
+//
+// Conditions:
+// 1. Generated HTML is available
+fun shouldSaveHTML(c: Context): Context {
+    if (c.recentField == "html") {
+        val inputFile = c.inputFiles[c.convertFileId]
+        val path = outputFile(inputFile)
+        fsWriteFile(path, c.html)
+        c.didSaveHTML = true
+        c.recentField = "didSaveHTML"
         return c
     }
 

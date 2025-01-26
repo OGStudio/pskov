@@ -8,12 +8,17 @@ fun main(args: Array<String>) {
 
     // Register behaviour.
     arrayOf(
+        ::shouldConvert,
         ::shouldListInputFiles,
         ::shouldParseCfg,
         ::shouldPrintToConsole,
         ::shouldReadCfg,
+        ::shouldReadMarkdown,
+        ::shouldRepeatConversion,
         ::shouldResetCfgPath,
+        ::shouldResetDbg,
         ::shouldResetInputDirs,
+        ::shouldSaveHTML,
     ).forEach { f ->
         ctrl.registerFunction { c -> f(c as Context) }
     }
