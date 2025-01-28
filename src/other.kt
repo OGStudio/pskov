@@ -26,7 +26,9 @@ fun cfgInputDirs(
     var dirs = arrayOf<String>()
     for (item in items) {
         val dir = prefix + FS_DELIMITER + item
-        dirs += dir
+        // Remove potentially duplicated FS_DELIMITER
+        val cleanDir = dir.replace(FS_DELIMITER + FS_DELIMITER, FS_DELIMITER)
+        dirs += cleanDir
     }
     return dirs
 }
