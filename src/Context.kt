@@ -25,7 +25,7 @@ data class Context(
     var didLaunch: Boolean = false,
     // Finished writing generated HTML to disk
     var didSaveHTML: Boolean = false,
-    // HTML generated out of Makdown for currently processed file
+    // HTML generated out of Markdown for currently processed file
     var html: String = "",
     // List of directories from cfg's `input`
     var inputDirs: Array<String> = arrayOf(),
