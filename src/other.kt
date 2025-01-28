@@ -98,6 +98,13 @@ fun dbgStringArray(items: Array<String>): String {
     return output
 }
 
+// Extract directory from path by dropping the ending
+fun dirname(path: String): String {
+    val parts = path.split(FS_DELIMITER)
+    val dropped = parts.dropLast(1)
+    return dropped.joinToString(FS_DELIMITER)
+}
+
 // Search in each of the provided directory for Markdown files
 fun listInputFiles(dirs: Array<String>): Array<String> {
     var files = arrayOf<String>()
@@ -124,6 +131,21 @@ fun listMarkdownFiles(dir: String): Array<String> {
 }
 
 // Convert input Markdown filename to output HTML filename
-fun outputFile(inputFile: String): String {
-    return inputFile.replace(".md", ".psk2.html")
+fun outputFile(
+    inputFile: String,
+    slug: String
+): String {
+    val dir = dirname(inputFile)
+    return dir + FS_DELIMITER + slug + ".html"
+}
+
+// Effective name of generated HTML page
+fun pageSlug(mdLines: Array<String>): String {
+    for (ln in mdLines) {
+        if (ln.startsWith(PAGE_SLUG)) {
+            return ln.replace(PAGE_SLUG, "").trim()
+        }
+    }
+
+    return "unknown-page-slug"
 }

@@ -187,7 +187,8 @@ fun shouldResetInputDirs(c: Context): Context {
 fun shouldSaveHTML(c: Context): Context {
     if (c.recentField == "html") {
         val inputFile = c.inputFiles[c.convertFileId]
-        val path = outputFile(inputFile)
+        val slug = pageSlug(c.markdownLines)
+        val path = outputFile(inputFile, slug)
         fsWriteFile(path, c.html)
         c.didSaveHTML = true
         c.recentField = "didSaveHTML"
