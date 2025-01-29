@@ -25,9 +25,9 @@ fun shouldConvert(c: Context): Context {
 // List files to process
 //
 // Conditions:
-// 1. Input dirs are available
+// 1. Templates are available
 fun shouldListInputFiles(c: Context): Context {
-    if (c.recentField == "inputDirs") {
+    if (c.recentField == "templates") {
         c.inputFiles = listInputFiles(c.inputDirs)
         c.recentField = "inputFiles"
         return c
@@ -93,6 +93,22 @@ fun shouldReadMarkdown(c: Context): Context {
         val path = c.inputFiles[c.convertFileId]
         c.markdownLines = fsReadFile(path)
         c.recentField = "markdownLines"
+        return c
+    }
+
+    c.recentField = "none"
+    return c
+}
+
+// Read templates from all input directories
+//
+// Conditions:
+// 1. Input directories are available
+fun shouldReadTemplates(c: Context): Context {
+    if (c.recentField == "inputDirs") {
+        val files = expectedTemplateFiles(c.cfg)
+        c.templates = readTemplates(c.inputDirs, files)
+        c.recentField = "templates"
         return c
     }
 

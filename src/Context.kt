@@ -35,6 +35,8 @@ data class Context(
     var isDbg: Boolean = false,
     // Currently converted Markdown file contents as lines
     var markdownLines: Array<String> = arrayOf(),
+    // Templates for input directories
+    var templates: Map<String, String> = mapOf(),
     override var recentField: String = "",
 ): CLDContext {
     override fun <T> field(name: String): T {
@@ -64,6 +66,8 @@ data class Context(
             return isDbg as T
         } else if (name == "markdownLines") {
             return markdownLines as T
+        } else if (name == "templates") {
+            return templates as T
         }
         return "unknown-field-name" as T
     }
@@ -102,6 +106,8 @@ data class Context(
             isDbg = value as Boolean
         } else if (name == "markdownLines") {
             markdownLines = value as Array<String>
+        } else if (name == "templates") {
+            templates = value as Map<String, String>
         }
     }
 }

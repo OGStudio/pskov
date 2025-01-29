@@ -14,6 +14,7 @@ fun main(args: Array<String>) {
         ::shouldPrintToConsole,
         ::shouldReadCfg,
         ::shouldReadMarkdown,
+        ::shouldReadTemplates,
         ::shouldRepeatConversion,
         ::shouldResetCfgPath,
         ::shouldResetDbg,

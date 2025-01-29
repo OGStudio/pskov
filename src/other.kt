@@ -107,6 +107,11 @@ fun dirname(path: String): String {
     return dropped.joinToString(FS_DELIMITER)
 }
 
+// Extract file names from config
+fun expectedTemplateFiles(cfg: Map<String, String>): Array<String> {
+
+}
+
 // Search in each of the provided directory for Markdown files
 fun listInputFiles(dirs: Array<String>): Array<String> {
     var files = arrayOf<String>()
@@ -150,4 +155,12 @@ fun pageSlug(mdLines: Array<String>): String {
     }
 
     return "unknown-page-slug"
+}
+
+// Read templates for all input dirs
+fun readTemplates(
+    dirs: Array<String>,
+    files: Array<String>
+): Map<String, String> {
+
 }
