@@ -192,3 +192,14 @@ fun pageSlug(mdLines: Array<String>): String {
 
     return "unknown-page-slug"
 }
+
+// Read template files
+fun readTemplates(files: Array<String>): Map<String, String> {
+    var d = mapOf<String, String>()
+    for (file in files) {
+        val lines = fsReadFile(file)
+        val contents = lines.joinToString("\n")
+        d[file] = contents
+    }
+    return d
+}
