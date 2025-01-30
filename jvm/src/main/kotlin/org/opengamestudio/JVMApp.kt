@@ -11,6 +11,7 @@ fun main(args: Array<String>) {
         ::shouldConvert,
         ::shouldListInputDirFiles,
         ::shouldListInputFiles,
+        ::shouldListTemplateFiles,
         ::shouldParseCfg,
         ::shouldPrintToConsole,
         ::shouldReadCfg,

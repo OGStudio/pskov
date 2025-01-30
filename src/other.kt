@@ -164,7 +164,7 @@ fun listTemplateFiles(
 ): Array<String> {
     var files = arrayOf<String>()
     for (df in dirFiles) {
-        for (tf in templatefiles) {
+        for (tf in templateFiles) {
             if (df.endsWith(tf)) {
                 files += df
             }
@@ -195,7 +195,7 @@ fun pageSlug(mdLines: Array<String>): String {
 
 // Read template files
 fun readTemplates(files: Array<String>): Map<String, String> {
-    var d = mapOf<String, String>()
+    var d = mutableMapOf<String, String>()
     for (file in files) {
         val lines = fsReadFile(file)
         val contents = lines.joinToString("\n")
