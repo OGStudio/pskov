@@ -109,32 +109,68 @@ fun dirname(path: String): String {
 
 // Extract file names from config
 fun expectedTemplateFiles(cfg: Map<String, String>): Array<String> {
-
-}
-
-// Search in each of the provided directory for Markdown files
-fun listInputFiles(dirs: Array<String>): Array<String> {
     var files = arrayOf<String>()
-    for (dir in dirs) {
-        files += listMarkdownFiles(dir)
+    cfg[TEMPLATE_INDEX]?.also { f ->
+        files += f
+    }
+    cfg[TEMPLATE_ITEM]?.also { f ->
+        files += f
+    }
+    cfg[TEMPLATE_PAGINATION_NEXT]?.also { f ->
+        files += f
+    }
+    cfg[TEMPLATE_PAGINATION_PREV]?.also { f ->
+        files += f
+    }
+    cfg[TEMPLATE_PAGINATION_PREV_NEXT]?.also { f ->
+        files += f
+    }
+    cfg[TEMPLATE_PREVIEW]?.also { f ->
+        files += f
     }
     return files
 }
 
-// Search for `*.md` files in the directory and prepend dir
-fun listMarkdownFiles(dir: String): Array<String> {
-    var fileNames = arrayOf<String>()
-    val files = fsListFiles(dir)
-    for (file in files) {
-        if (
-            file.isFile &&
-            file.name.endsWith(".md")
-        ) {
-            fileNames += dir + FS_DELIMITER + file.name
+// Collect list of all files in input directories
+fun listInputDirFiles(dirs: Array<String>): Array<String> {
+    var files = arrayOf<String>()
+    for (dir in dirs) {
+        val fs = fsListFiles(dir)
+        for (f in fs) {
+            if (f.isFile) {
+                files += dir + FS_DELIMITER + f.name
+            }
         }
     }
-    fileNames.sort()
-    return fileNames
+    files.sort()
+    return files
+}
+
+// Extract Markdown files from list of all files
+fun listInputFiles(allFiles: Array<String>): Array<String> {
+    var files = arrayOf<String>()
+    for (f in allFiles) {
+        if (f.endsWith(".md")) {
+            files += f
+        }
+    }
+    return files
+}
+
+// List template files of input directories
+fun listTemplateFiles(
+    dirFiles: Array<String>,
+    templateFiles: Array<String>
+): Array<String> {
+    var files = arrayOf<String>()
+    for (df in dirFiles) {
+        for (tf in templatefiles) {
+            if (df.endsWith(tf)) {
+                files += df
+            }
+        }
+    }
+    return files
 }
 
 // Convert input Markdown filename to output HTML filename
@@ -155,12 +191,4 @@ fun pageSlug(mdLines: Array<String>): String {
     }
 
     return "unknown-page-slug"
-}
-
-// Read templates for all input dirs
-fun readTemplates(
-    dirs: Array<String>,
-    files: Array<String>
-): Map<String, String> {
-
 }

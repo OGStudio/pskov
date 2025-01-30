@@ -27,6 +27,8 @@ data class Context(
     var didSaveHTML: Boolean = false,
     // HTML generated out of Markdown for currently processed file
     var html: String = "",
+    // List of all files in input directories
+    var inputDirFiles: Array<String> = arrayOf(),
     // List of directories from cfg's `input`
     var inputDirs: Array<String> = arrayOf(),
     // List of files to process
@@ -35,6 +37,8 @@ data class Context(
     var isDbg: Boolean = false,
     // Currently converted Markdown file contents as lines
     var markdownLines: Array<String> = arrayOf(),
+    // List of template files
+    var templateFiles: Array<String> = arrayOf(),
     // Templates for input directories
     var templates: Map<String, String> = mapOf(),
     override var recentField: String = "",
@@ -58,6 +62,8 @@ data class Context(
             return didSaveHTML as T
         } else if (name == "html") {
             return html as T
+        } else if (name == "inputDirFiles") {
+            return inputDirFiles as T
         } else if (name == "inputDirs") {
             return inputDirs as T
         } else if (name == "inputFiles") {
@@ -66,6 +72,8 @@ data class Context(
             return isDbg as T
         } else if (name == "markdownLines") {
             return markdownLines as T
+        } else if (name == "templateFiles") {
+            return templateFiles as T
         } else if (name == "templates") {
             return templates as T
         }
@@ -98,6 +106,8 @@ data class Context(
             didSaveHTML = value as Boolean
         } else if (name == "html") {
             html = value as String
+        } else if (name == "inputDirFiles") {
+            inputDirFiles = value as Array<String>
         } else if (name == "inputDirs") {
             inputDirs = value as Array<String>
         } else if (name == "inputFiles") {
@@ -106,6 +116,8 @@ data class Context(
             isDbg = value as Boolean
         } else if (name == "markdownLines") {
             markdownLines = value as Array<String>
+        } else if (name == "templateFiles") {
+            templateFiles = value as Array<String>
         } else if (name == "templates") {
             templates = value as Map<String, String>
         }

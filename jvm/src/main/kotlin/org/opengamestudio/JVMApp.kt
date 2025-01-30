@@ -9,6 +9,7 @@ fun main(args: Array<String>) {
     // Register behaviour.
     arrayOf(
         ::shouldConvert,
+        ::shouldListInputDirFiles,
         ::shouldListInputFiles,
         ::shouldParseCfg,
         ::shouldPrintToConsole,
