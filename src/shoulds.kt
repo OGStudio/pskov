@@ -13,7 +13,11 @@ package org.opengamestudio
 // 1. Markdown is available
 fun shouldConvert(c: Context): Context {
     if (c.recentField == "markdownLines") {
-        c.html = markdownToHTML(c.markdownLines)
+        val path = c.inputFiles[c.convertFileId]
+        var tmpl = pageTemplate(path, c.cfg, c.templates)
+        val title = pageTitle(c.markdownLines)
+        c.html = tmpl
+            .replace("PSKOV_ITEM_TITLE", title)
         c.recentField = "html"
         return c
     }

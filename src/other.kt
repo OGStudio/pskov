@@ -179,11 +179,33 @@ fun outputFile(
     return dir + FS_DELIMITER + slug + ".html"
 }
 
-// Effective name of generated HTML page
+// File name of the generated HTML page
 fun pageSlug(mdLines: Array<String>): String {
     for (ln in mdLines) {
         if (ln.startsWith(PAGE_SLUG)) {
             return ln.replace(PAGE_SLUG, "").trim()
+        }
+    }
+
+    return "unknown-page-slug"
+}
+
+// Item template for the page
+fun pageTemplate(
+    path: String,
+    cfg: Map<String, String>,
+    templates: Map<String, String>
+): String {
+    val dir = dirname(path)
+    val templateFile = dir + FS_DELIMITER + cfg[TEMPLATE_ITEM]!!
+    return templates[templateFile]!!
+}
+
+// Article title of the generated HTML page
+fun pageTitle(mdLines: Array<String>): String {
+    for (ln in mdLines) {
+        if (ln.startsWith(PAGE_TITLE)) {
+            return ln.replace(PAGE_TITLE, "").trim()
         }
     }
 
