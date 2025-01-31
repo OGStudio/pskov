@@ -110,23 +110,20 @@ fun dirname(path: String): String {
 // Extract file names from config
 fun expectedTemplateFiles(cfg: Map<String, String>): Array<String> {
     var files = arrayOf<String>()
-    cfg[TEMPLATE_INDEX]?.let { f ->
-        files += f
-    }
-    cfg[TEMPLATE_ITEM]?.let { f ->
-        files += f
-    }
-    cfg[TEMPLATE_PAGINATION_NEXT]?.let { f ->
-        files += f
-    }
-    cfg[TEMPLATE_PAGINATION_PREV]?.let { f ->
-        files += f
-    }
-    cfg[TEMPLATE_PAGINATION_PREV_NEXT]?.let { f ->
-        files += f
-    }
-    cfg[TEMPLATE_PREVIEW]?.let { f ->
-        files += f
+    arrayOf(
+        TEMPLATE_INDEX,
+        TEMPLATE_ITEM,
+        TEMPLATE_PAGINATION_NEXT,
+        TEMPLATE_PAGINATION_PREV,
+        TEMPLATE_PAGINATION_PREV_NEXT,
+        TEMPLATE_PREVIEW,
+    ).forEach { f ->
+        if (
+            cfg.containsKey(f) &&
+            cfg[f]!!.length > 0
+        ) {
+            files += cfg[f]!!
+        }
     }
     print("ИГР expectedTF files: '${dbgStringArray(files)}'")
     return files
