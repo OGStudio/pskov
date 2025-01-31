@@ -125,7 +125,6 @@ fun expectedTemplateFiles(cfg: Map<String, String>): Array<String> {
             files += cfg[f]!!
         }
     }
-    print("ИГР expectedTF files: '${dbgStringArray(files)}'")
     return files
 }
 
