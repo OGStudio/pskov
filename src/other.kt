@@ -179,6 +179,26 @@ fun outputFile(
     return dir + FS_DELIMITER + slug + ".html"
 }
 
+// Generated HTML contents
+fun pageContents(mdLines: Array<String>): String {
+    var contents = ""
+    var isHeaderOver = false
+    for (ln in mdLines) {
+        if (isHeaderOver) {
+            contents += ln + "\n"
+        }
+        else if (
+            !isHeaderOver &&
+            ln == ""
+        ) {
+            // Header ends at the first blank line
+            isHeaderOver = true
+        }
+    }
+
+    return contents
+}
+
 // File name of the generated HTML page
 fun pageSlug(mdLines: Array<String>): String {
     for (ln in mdLines) {

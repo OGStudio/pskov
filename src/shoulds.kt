@@ -7,7 +7,7 @@
 
 package org.opengamestudio
 
-// Convert Markdown to HTML
+// Convert Markdown page to HTML one
 //
 // Conditions:
 // 1. Markdown is available
@@ -16,7 +16,10 @@ fun shouldConvert(c: Context): Context {
         val path = c.inputFiles[c.convertFileId]
         var tmpl = pageTemplate(path, c.cfg, c.templates)
         val title = pageTitle(c.markdownLines)
+        val contents = pageContents(c.markdownLines)
+        val htmlContents = markdownToHTML(contents)
         c.html = tmpl
+            .replace("PSKOV_ITEM_CONTENTS", htmlContents)
             .replace("PSKOV_ITEM_TITLE", title)
         c.recentField = "html"
         return c
