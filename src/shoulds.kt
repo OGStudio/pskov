@@ -15,12 +15,14 @@ fun shouldConvert(c: Context): Context {
     if (c.recentField == "markdownLines") {
         val path = c.inputFiles[c.convertFileId]
         var tmpl = pageTemplate(path, c.cfg, c.templates)
+        val dt = pageDate(c.markdownLines)
         val fileName = pageFileName(c.markdownLines)
         val contents = pageContents(c.markdownLines)
         val title = pageTitle(c.markdownLines)
         val htmlContents = markdownToHTML(contents)
         c.html = tmpl
             .replace("PSKOV_ITEM_CONTENTS", htmlContents)
+            .replace("PSKOV_ITEM_DATE", dt)
             .replace("PSKOV_ITEM_TITLE", title)
             .replace("PSKOV_ITEM_URL", fileName)
         c.recentField = "html"

@@ -199,6 +199,17 @@ fun pageContents(mdLines: Array<String>): String {
     return contents
 }
 
+// Article date of the generated HTML page
+fun pageDate(mdLines: Array<String>): String {
+    for (ln in mdLines) {
+        if (ln.startsWith(PAGE_DATE)) {
+            return ln.replace(PAGE_DATE, "").trim()
+        }
+    }
+
+    return "unknown-page-date"
+}
+
 // Item template for the page
 fun pageTemplate(
     path: String,
