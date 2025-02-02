@@ -173,10 +173,10 @@ fun listTemplateFiles(
 // Convert input Markdown filename to output HTML filename
 fun outputFile(
     inputFile: String,
-    slug: String
+    fileName: String
 ): String {
     val dir = dirname(inputFile)
-    return dir + FS_DELIMITER + slug + ".html"
+    return dir + FS_DELIMITER + fileName
 }
 
 // Generated HTML contents
@@ -199,17 +199,6 @@ fun pageContents(mdLines: Array<String>): String {
     return contents
 }
 
-// File name of the generated HTML page
-fun pageSlug(mdLines: Array<String>): String {
-    for (ln in mdLines) {
-        if (ln.startsWith(PAGE_SLUG)) {
-            return ln.replace(PAGE_SLUG, "").trim()
-        }
-    }
-
-    return "unknown-page-slug"
-}
-
 // Item template for the page
 fun pageTemplate(
     path: String,
@@ -230,6 +219,18 @@ fun pageTitle(mdLines: Array<String>): String {
     }
 
     return "unknown-page-slug"
+}
+
+// File name of the generated HTML page
+fun pageFileName(mdLines: Array<String>): String {
+    for (ln in mdLines) {
+        if (ln.startsWith(PAGE_SLUG)) {
+            val slug = ln.replace(PAGE_SLUG, "").trim()
+            return slug + ".html"
+        }
+    }
+
+    return "unknown-page-filename.html"
 }
 
 // Read template files

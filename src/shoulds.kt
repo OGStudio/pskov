@@ -15,12 +15,14 @@ fun shouldConvert(c: Context): Context {
     if (c.recentField == "markdownLines") {
         val path = c.inputFiles[c.convertFileId]
         var tmpl = pageTemplate(path, c.cfg, c.templates)
-        val title = pageTitle(c.markdownLines)
+        val fileName = pageFileName(c.markdownLines)
         val contents = pageContents(c.markdownLines)
+        val title = pageTitle(c.markdownLines)
         val htmlContents = markdownToHTML(contents)
         c.html = tmpl
             .replace("PSKOV_ITEM_CONTENTS", htmlContents)
             .replace("PSKOV_ITEM_TITLE", title)
+            .replace("PSKOV_ITEM_URL", fileName)
         c.recentField = "html"
         return c
     }
@@ -241,8 +243,8 @@ fun shouldResetInputDirs(c: Context): Context {
 fun shouldSaveHTML(c: Context): Context {
     if (c.recentField == "html") {
         val inputFile = c.inputFiles[c.convertFileId]
-        val slug = pageSlug(c.markdownLines)
-        val path = outputFile(inputFile, slug)
+        val fileName = pageFileName(c.markdownLines)
+        val path = outputFile(inputFile, fileName)
         fsWriteFile(path, c.html)
         c.didSaveHTML = true
         c.recentField = "didSaveHTML"
