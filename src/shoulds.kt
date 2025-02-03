@@ -7,14 +7,40 @@
 
 package org.opengamestudio
 
-// Convert Markdown to HTML
+// Convert Markdown page to HTML one
 //
 // Conditions:
 // 1. Markdown is available
 fun shouldConvert(c: Context): Context {
     if (c.recentField == "markdownLines") {
-        c.html = markdownToHTML(c.markdownLines)
+        val path = c.inputFiles[c.convertFileId]
+        var tmpl = pageTemplate(path, c.cfg, c.templates)
+        val dt = pageDate(c.markdownLines)
+        val fileName = pageFileName(c.markdownLines)
+        val contents = pageContents(c.markdownLines)
+        val title = pageTitle(c.markdownLines)
+        val htmlContents = markdownToHTML(contents)
+        c.html = tmpl
+            .replace("PSKOV_ITEM_CONTENTS", htmlContents)
+            .replace("PSKOV_ITEM_DATE", dt)
+            .replace("PSKOV_ITEM_TITLE", title)
+            .replace("PSKOV_ITEM_URL", fileName)
         c.recentField = "html"
+        return c
+    }
+
+    c.recentField = "none"
+    return c
+}
+
+// List all files of input directories
+//
+// Conditions:
+// 1. Input directories are available
+fun shouldListInputDirFiles(c: Context): Context {
+    if (c.recentField == "inputDirs") {
+        c.inputDirFiles = listInputDirFiles(c.inputDirs)
+        c.recentField = "inputDirFiles"
         return c
     }
 
@@ -25,10 +51,10 @@ fun shouldConvert(c: Context): Context {
 // List files to process
 //
 // Conditions:
-// 1. Input dirs are available
+// 1. Templates are available
 fun shouldListInputFiles(c: Context): Context {
-    if (c.recentField == "inputDirs") {
-        c.inputFiles = listInputFiles(c.inputDirs)
+    if (c.recentField == "templates") {
+        c.inputFiles = listInputFiles(c.inputDirFiles)
         c.recentField = "inputFiles"
         return c
     }
@@ -36,6 +62,23 @@ fun shouldListInputFiles(c: Context): Context {
     c.recentField = "none"
     return c
 }
+
+// List template files
+//
+// Conditions:
+// 1. Files of input directories are available
+fun shouldListTemplateFiles(c: Context): Context {
+    if (c.recentField == "inputDirFiles") {
+        val files = expectedTemplateFiles(c.cfg)
+        c.templateFiles = listTemplateFiles(c.inputDirFiles, files)
+        c.recentField = "templateFiles"
+        return c
+    }
+
+    c.recentField = "none"
+    return c
+}
+
 // Parse cfg
 //
 // Conditions:
@@ -93,6 +136,21 @@ fun shouldReadMarkdown(c: Context): Context {
         val path = c.inputFiles[c.convertFileId]
         c.markdownLines = fsReadFile(path)
         c.recentField = "markdownLines"
+        return c
+    }
+
+    c.recentField = "none"
+    return c
+}
+
+// Read template files
+//
+// Conditions:
+// 1. Template files are available
+fun shouldReadTemplates(c: Context): Context {
+    if (c.recentField == "templateFiles") {
+        c.templates = readTemplates(c.templateFiles)
+        c.recentField = "templates"
         return c
     }
 
@@ -187,7 +245,8 @@ fun shouldResetInputDirs(c: Context): Context {
 fun shouldSaveHTML(c: Context): Context {
     if (c.recentField == "html") {
         val inputFile = c.inputFiles[c.convertFileId]
-        val path = outputFile(inputFile)
+        val fileName = pageFileName(c.markdownLines)
+        val path = outputFile(inputFile, fileName)
         fsWriteFile(path, c.html)
         c.didSaveHTML = true
         c.recentField = "didSaveHTML"

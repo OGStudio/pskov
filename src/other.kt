@@ -26,7 +26,9 @@ fun cfgInputDirs(
     var dirs = arrayOf<String>()
     for (item in items) {
         val dir = prefix + FS_DELIMITER + item
-        dirs += dir
+        // Remove potentially duplicated FS_DELIMITER
+        val cleanDir = dir.replace(FS_DELIMITER + FS_DELIMITER, FS_DELIMITER)
+        dirs += cleanDir
     }
     return dirs
 }
@@ -98,32 +100,157 @@ fun dbgStringArray(items: Array<String>): String {
     return output
 }
 
-// Search in each of the provided directory for Markdown files
-fun listInputFiles(dirs: Array<String>): Array<String> {
+// Extract directory from path by dropping the ending
+fun dirname(path: String): String {
+    val parts = path.split(FS_DELIMITER)
+    val dropped = parts.dropLast(1)
+    return dropped.joinToString(FS_DELIMITER)
+}
+
+// Extract file names from config
+fun expectedTemplateFiles(cfg: Map<String, String>): Array<String> {
     var files = arrayOf<String>()
-    for (dir in dirs) {
-        files += listMarkdownFiles(dir)
+    arrayOf(
+        TEMPLATE_INDEX,
+        TEMPLATE_ITEM,
+        TEMPLATE_PAGINATION_NEXT,
+        TEMPLATE_PAGINATION_PREV,
+        TEMPLATE_PAGINATION_PREV_NEXT,
+        TEMPLATE_PREVIEW,
+    ).forEach { f ->
+        if (
+            cfg.containsKey(f) &&
+            cfg[f]!!.length > 0
+        ) {
+            files += cfg[f]!!
+        }
     }
     return files
 }
 
-// Search for `*.md` files in the directory and prepend dir
-fun listMarkdownFiles(dir: String): Array<String> {
-    var fileNames = arrayOf<String>()
-    val files = fsListFiles(dir)
-    for (file in files) {
-        if (
-            file.isFile &&
-            file.name.endsWith(".md")
-        ) {
-            fileNames += dir + FS_DELIMITER + file.name
+// Collect list of all files in input directories
+fun listInputDirFiles(dirs: Array<String>): Array<String> {
+    var files = arrayOf<String>()
+    for (dir in dirs) {
+        val fs = fsListFiles(dir)
+        for (f in fs) {
+            if (f.isFile) {
+                files += dir + FS_DELIMITER + f.name
+            }
         }
     }
-    fileNames.sort()
-    return fileNames
+    files.sort()
+    return files
+}
+
+// Extract Markdown files from list of all files
+fun listInputFiles(allFiles: Array<String>): Array<String> {
+    var files = arrayOf<String>()
+    for (f in allFiles) {
+        if (f.endsWith(".md")) {
+            files += f
+        }
+    }
+    return files
+}
+
+// List template files of input directories
+fun listTemplateFiles(
+    dirFiles: Array<String>,
+    templateFiles: Array<String>
+): Array<String> {
+    var files = arrayOf<String>()
+    for (df in dirFiles) {
+        for (tf in templateFiles) {
+            if (df.endsWith(tf)) {
+                files += df
+            }
+        }
+    }
+    return files
 }
 
 // Convert input Markdown filename to output HTML filename
-fun outputFile(inputFile: String): String {
-    return inputFile.replace(".md", ".psk2.html")
+fun outputFile(
+    inputFile: String,
+    fileName: String
+): String {
+    val dir = dirname(inputFile)
+    return dir + FS_DELIMITER + fileName
+}
+
+// Generated HTML contents
+fun pageContents(mdLines: Array<String>): String {
+    var contents = ""
+    var isHeaderOver = false
+    for (ln in mdLines) {
+        if (isHeaderOver) {
+            contents += ln + "\n"
+        }
+        else if (
+            !isHeaderOver &&
+            ln == ""
+        ) {
+            // Header ends at the first blank line
+            isHeaderOver = true
+        }
+    }
+
+    return contents
+}
+
+// Article date of the generated HTML page
+fun pageDate(mdLines: Array<String>): String {
+    for (ln in mdLines) {
+        if (ln.startsWith(PAGE_DATE)) {
+            return ln.replace(PAGE_DATE, "").trim()
+        }
+    }
+
+    return "unknown-page-date"
+}
+
+// File name of the generated HTML page
+fun pageFileName(mdLines: Array<String>): String {
+    for (ln in mdLines) {
+        if (ln.startsWith(PAGE_SLUG)) {
+            val slug = ln.replace(PAGE_SLUG, "").trim()
+            return slug + ".html"
+        }
+    }
+
+    return "unknown-page-filename.html"
+}
+
+// Item template for the page
+fun pageTemplate(
+    path: String,
+    cfg: Map<String, String>,
+    templates: Map<String, String>
+): String {
+    val dir = dirname(path)
+    val templateFile = dir + FS_DELIMITER + cfg[TEMPLATE_ITEM]!!
+    return templates[templateFile]!!
+}
+
+// Article title of the generated HTML page
+fun pageTitle(mdLines: Array<String>): String {
+    for (ln in mdLines) {
+        if (ln.startsWith(PAGE_TITLE)) {
+            return ln.replace(PAGE_TITLE, "").trim()
+        }
+    }
+
+    return "unknown-page-slug"
+}
+
+// Read template files
+fun readTemplates(files: Array<String>): Map<String, String> {
+    var d = mutableMapOf<String, String>()
+    for (file in files) {
+        val lines = fsReadFile(file)
+        val contents = lines.joinToString("\n")
+        d[file] = contents
+    }
+    return d
 }

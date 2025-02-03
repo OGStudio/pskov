@@ -11,11 +11,13 @@ package org.opengamestudio
 fun consoleDebug(c: Context) {
     val key = c.recentField
     val value = c.fieldAny(c.recentField)
-    var strval = "${value}"//.take(30)
+    var strval = "${value}"
     // Preview array of strings
     (value as? Array<String>)?.also { items ->
         strval = dbgStringArray(items)
     }
+    // Limit the length of printed value
+    strval = strval.take(DBG_LEN)
 
     if (c.isDbg) {
         println("PSK-DBG '$key': '$strval'")
