@@ -210,6 +210,18 @@ fun pageDate(mdLines: Array<String>): String {
     return "unknown-page-date"
 }
 
+// File name of the generated HTML page
+fun pageFileName(mdLines: Array<String>): String {
+    for (ln in mdLines) {
+        if (ln.startsWith(PAGE_SLUG)) {
+            val slug = ln.replace(PAGE_SLUG, "").trim()
+            return slug + ".html"
+        }
+    }
+
+    return "unknown-page-filename.html"
+}
+
 // Item template for the page
 fun pageTemplate(
     path: String,
@@ -230,18 +242,6 @@ fun pageTitle(mdLines: Array<String>): String {
     }
 
     return "unknown-page-slug"
-}
-
-// File name of the generated HTML page
-fun pageFileName(mdLines: Array<String>): String {
-    for (ln in mdLines) {
-        if (ln.startsWith(PAGE_SLUG)) {
-            val slug = ln.replace(PAGE_SLUG, "").trim()
-            return slug + ".html"
-        }
-    }
-
-    return "unknown-page-filename.html"
 }
 
 // Read template files
