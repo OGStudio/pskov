@@ -5,6 +5,7 @@ data class Context(
     // Command line arguments
     var arguments: Array<String> = arrayOf(),
     // Config file contents as key-value dictionary
+    var cfg: Map<String, String> = mapOf(),
     var cfgLines: Array<String> = arrayOf(),
     var cfgPath: String = "",
     var consoleOutput: String = "",
@@ -21,11 +22,15 @@ data class Context(
     var isDbg: Boolean = false,
     var markdownLines: Array<String> = arrayOf(),
     var templateFiles: Array<String> = arrayOf(),
+    // Templates for input directories
+    var templates: Map<String, String> = mapOf(),
     override var recentField: String = "",
 ): CLDContext {
     override fun <T> field(name: String): T {
         if (name == "arguments") {
             return arguments as T
+        } else if (name == "cfg") {
+            return cfg as T
         } else if (name == "cfgLines") {
             return cfgLines as T
         } else if (name == "cfgPath") {
@@ -52,6 +57,8 @@ data class Context(
             return markdownLines as T
         } else if (name == "templateFiles") {
             return templateFiles as T
+        } else if (name == "templates") {
+            return templates as T
         }
         return "unknown-field-name" as T
     }
@@ -66,6 +73,8 @@ data class Context(
     ) {
         if (name == "arguments") {
             arguments = value as Array<String>
+        } else if (name == "cfg") {
+            cfg = value as Map<String, String>
         } else if (name == "cfgLines") {
             cfgLines = value as Array<String>
         } else if (name == "cfgPath") {
@@ -92,13 +101,14 @@ data class Context(
             markdownLines = value as Array<String>
         } else if (name == "templateFiles") {
             templateFiles = value as Array<String>
+        } else if (name == "templates") {
+            templates = value as Map<String, String>
         }
     }
 }
 
 // File system item representation
 data class FSFile(
-    // Templates for input directories
     var isDirectory: Boolean = false,
     var isFile: Boolean = false,
     var name: String = "",
