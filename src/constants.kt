@@ -1,12 +1,13 @@
 /**
  * This file is part of PSKOV:
  *     https://github.com/OGStudio/pskov
- * License: MIT
- * Version: 2.0.0
+ * License: CC0
+ * Version: 2.0.1
  */
 
 package org.opengamestudio
 
+const val APP_VERSION = "2.0.1"
 const val ARGUMENT_CFG = "--cfg"
 const val ARGUMENT_DBG = "--dbg"
 const val CFG_FILE = "pskov.cfg"

@@ -2,6 +2,32 @@ version: 1
 
 kotlin: package org.opengamestudio
 
+Context:
+    type: context
+    fields:
+        # Command line arguments
+        arguments: [String]
+        # Config file contents as key-value dictionary
+        cfg: [String: String]
+        cfgLines: [String]
+        cfgPath: String
+        consoleOutput: String
+        # Conversion iterator
+        convertFileId: Int
+        didLaunch: Bool
+        didSaveHTML: Bool
+        html: String
+        # List of all files in input directories
+        inputDirFiles: [String]
+        inputDirs: [String]
+        # List of files to process
+        inputFiles: [String]
+        isDbg: Bool
+        markdownLines: [String]
+        templateFiles: [String]
+        # Templates for input directories
+        templates: [String: String]
+
 # File system item representation
 FSFile:
     type: struct
